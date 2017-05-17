@@ -1,0 +1,7 @@
+[[dependencies]]
+  branch = "master"
+  name = "github.com/prometheus/client_golang"
+
+[[dependencies]]
+  branch = "master"
+  name = "gitlab.com/mmoya/faircoin2_rpcclient"
