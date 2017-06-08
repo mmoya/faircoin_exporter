@@ -56,6 +56,6 @@ memo = "4ecd9ae671c9a01d065c4c25edca9c177bf8780037b118e1bb4c89105e0cf1f7"
 
 [[projects]]
   branch = "master"
-  name = "gitlab.com/mmoya/faircoin2_rpcclient"
+  name = "github.com/mmoya/faircoin2_rpcclient"
   packages = ["."]
   revision = "d19440c2040da729bc288e8d11fedf95d676da36"

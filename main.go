@@ -7,8 +7,8 @@ import (
 
 	"log"
 
+	client "github.com/mmoya/faircoin2_rpcclient"
 	"github.com/prometheus/client_golang/prometheus"
-	client "gitlab.com/mmoya/faircoin2_rpcclient"
 )
 
 var (

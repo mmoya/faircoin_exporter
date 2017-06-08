@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	client "gitlab.com/mmoya/faircoin2_rpcclient"
+	client "github.com/mmoya/faircoin2_rpcclient"
 )
 
 func updateActiveCVNs(c *client.FC2Client) {
