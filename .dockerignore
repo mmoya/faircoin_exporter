@@ -1,4 +1,6 @@
 Dockerfile
 Makefile
 
+*.md
 *.go
+vendor

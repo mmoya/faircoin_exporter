@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	client "github.com/mmoya/faircoin2_rpcclient"
+	client "github.com/mmoya/faircoin_rpcclient"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

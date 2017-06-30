@@ -1,5 +1,11 @@
-build-image:
-	go build
-	docker build --pull -t mmoya/faircoin2-exporter .
+REPO := mmoya/faircoin-exporter
+TAG := latest
 
-.PHONY: build
+build:
+	go build
+	docker build --pull -t $(REPO):$(TAG) .
+
+push:
+	docker push $(REPO):$(TAG)
+
+.PHONY: build-image push-image

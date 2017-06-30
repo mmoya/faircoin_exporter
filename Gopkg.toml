@@ -4,4 +4,4 @@
 
 [[dependencies]]
   branch = "master"
-  name = "github.com/mmoya/faircoin2_rpcclient"
+  name = "github.com/mmoya/faircoin_rpcclient"
