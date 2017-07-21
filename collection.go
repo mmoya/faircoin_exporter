@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	client "github.com/mmoya/faircoin_rpcclient"
+	faircoin "github.com/mmoya/faircoin_rpcclient"
 )
 
-func updateActiveCVNs(c *client.FC2Client) {
+func updateActiveCVNs(c *faircoin.Client) {
 	activeCvns, err := c.GetActiveCVNs()
 	if err != nil {
 		log.Fatal("GetActiveCvns: ", err)

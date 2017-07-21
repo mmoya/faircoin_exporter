@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	client "github.com/mmoya/faircoin_rpcclient"
+	faircoin "github.com/mmoya/faircoin_rpcclient"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -25,7 +25,7 @@ func init() {
 	cvnStatsBlocksMetric.Set(cvnStatsBlocks)
 }
 
-func updateState(c *client.FC2Client) {
+func updateState(c *faircoin.Client) {
 	for {
 		updateActiveCVNs(c)
 		lastUpdate.Set(float64(time.Now().Unix()))
@@ -37,7 +37,7 @@ func updateState(c *client.FC2Client) {
 func main() {
 	flag.Parse()
 
-	c := client.New(*rpcURL, client.CookieCredential())
+	c := faircoin.NewClient(*rpcURL, faircoin.CookieCredential())
 
 	log.Printf("connecting to faircoind rpc in %s\n", *rpcURL)
 
