@@ -1,7 +1,7 @@
 package client
 
 // GetBlockCount is the wrapper around getblockcount rpc call
-func (c *FC2Client) GetBlockCount() (int, error) {
+func (c *Client) GetBlockCount() (int, error) {
 	response, err := c.c.Call("getblockcount")
 	if err != nil {
 		return 0, err

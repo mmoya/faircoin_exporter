@@ -17,8 +17,8 @@ type Credential struct {
 	password string
 }
 
-// FC2Client is a client of FairCoin2 RPC service
-type FC2Client struct {
+// Client is a client of FairCoin RPC service
+type Client struct {
 	c *jsonrpc.RPCClient
 }
 
@@ -66,12 +66,12 @@ func CookieCredential() Credential {
 	return cred
 }
 
-// New returns a FairCoin2 RPC Client
-func New(url string, cred Credential) *FC2Client {
+// NewClient returns a FairCoin RPC client
+func NewClient(url string, cred Credential) *Client {
 	rpcClient := jsonrpc.NewRPCClient(url)
 	rpcClient.SetBasicAuth(cred.user, cred.password)
 
-	return &FC2Client{
+	return &Client{
 		c: rpcClient,
 	}
 }

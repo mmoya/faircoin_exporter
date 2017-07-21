@@ -19,7 +19,7 @@ type ActiveCvns struct {
 }
 
 // GetActiveCVNs is the wrapper around getactivecvn rpc call
-func (c *FC2Client) GetActiveCVNs() (*ActiveCvns, error) {
+func (c *Client) GetActiveCVNs() (*ActiveCvns, error) {
 	response, err := c.c.Call("getactivecvns")
 	if err != nil {
 		return nil, errors.Wrap(err, "error calling getactivecvns")
