@@ -20,10 +20,6 @@ var (
 	zmqURL = flag.String("zmq.uri", "tcp://127.0.0.1:28332", "URI of ZMQ server")
 )
 
-func init() {
-	// registerMetrics()
-}
-
 func main() {
 	flag.Parse()
 

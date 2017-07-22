@@ -86,13 +86,13 @@ func (c *Collector) updateCvnList() (int, error) {
 		return 0, err
 	}
 
-	currentHeight := activeCvns.CurrentHeight
-	c.state.lastBlockSigned = make(map[string]bool)
+	mCvnCount.Set(float64(len(activeCvns.Cvns)))
+	c.state.lastBlockSigned = make(map[string]bool, len(activeCvns.Cvns))
 	for _, cvn := range activeCvns.Cvns {
 		c.state.lastBlockSigned[cvn.NodeID] = false
 	}
 
-	return currentHeight, nil
+	return activeCvns.CurrentHeight, nil
 }
 
 func (c *Collector) updateStateFromBlock(blockHash string) (string, error) {
@@ -102,6 +102,8 @@ func (c *Collector) updateStateFromBlock(blockHash string) (string, error) {
 	}
 
 	if strings.Contains(block.Payload, "cvninfo") {
+		log.Println("cnvinfo blog, resetting cvn state")
+
 		_, err := c.updateCvnList()
 		if err != nil {
 			return "", errors.Wrap(err, "updateCvnList from a cvninfo block")
@@ -109,7 +111,7 @@ func (c *Collector) updateStateFromBlock(blockHash string) (string, error) {
 	}
 
 	c.state.height = block.Height
-	currentHeight.Set(float64(block.Height))
+	mCurrentHeight.Set(float64(block.Height))
 
 	missingIds := make(map[string]bool)
 	for _, id := range block.MissingCreatorIds {
@@ -121,12 +123,12 @@ func (c *Collector) updateStateFromBlock(blockHash string) (string, error) {
 
 		c.state.lastBlockSigned[id] = !missing
 
-		lbs := 1
+		lastBlockSigned := 1
 		if missing {
-			lbs = 0
+			lastBlockSigned = 0
 		}
 
-		lastBlockSigned.WithLabelValues(id).Set(float64(lbs))
+		mLastBlockSigned.WithLabelValues(id).Set(float64(lastBlockSigned))
 	}
 
 	return block.NextBlockHash, nil

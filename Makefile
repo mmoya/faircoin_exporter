@@ -22,4 +22,4 @@ image: docker-bin
 push:
 	docker push $(REPO):$(TAG)
 
-.PHONY: bin image push
+.PHONY: bin docker-bin image push
