@@ -20,10 +20,16 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/mmoya/faircoin_rpcclient"
   packages = ["."]
-  revision = "289c57afd99a575fb6e3171f2b6f2ca0e48e0ace"
+  revision = "0b3fe4965c7ab0adec4195d6528a42c55ec11b52"
+  version = "v0.0.1"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/pebbe/zmq4"
+  packages = ["."]
+  revision = "651d7b11cd31b16fb4c76741c234e258b6a8039b"
 
 [[projects]]
   name = "github.com/pkg/errors"
@@ -64,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "87399804dc595cdff2046000c94c407b879a4f74b3a9bcd024f66b612cc53771"
+  inputs-digest = "3e1ce60483a4bce959dde9e22830a909104c7d3c2d442e280ed0cd55f59af8d2"
   solver-name = "gps-cdcl"
   solver-version = 1
