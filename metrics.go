@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -18,23 +16,22 @@ var (
 	})
 
 	currentHeight = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name:      "cvn_current_height",
+		Name:      "current_height",
 		Subsystem: "faircoin",
 		Help:      "Height of the block chain",
 	})
 
-	lastBlocksSigned = prometheus.NewGaugeVec(
+	lastBlockSigned = prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
-			Name:      "cvn_last_blocks_signed",
+			Name:      "cvn_last_block_signed",
 			Subsystem: "faircoin",
-			Help:      fmt.Sprintf("Signed blocks (of the last %d)", cvnStatsBlocks),
+			Help:      "Is the last block signed by this CVN",
 		},
-		[]string{"node_id"},
-	)
-
-	cvnStatsBlocksMetric = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name:      "cvn_stats_blocks",
-		Subsystem: "faircoin",
-		Help:      "How many blocks are accounted to get CVN stats",
-	})
+		[]string{"node_id"})
 )
+
+func registerMetrics() {
+	prometheus.MustRegister(lastUpdate)
+	prometheus.MustRegister(currentHeight)
+	prometheus.MustRegister(lastBlockSigned)
+}

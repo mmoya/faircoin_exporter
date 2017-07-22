@@ -1,11 +1,13 @@
 REPO := mmoya/faircoin-exporter
 TAG := latest
 
-build:
+bin:
 	go build
+
+image: bin
 	docker build --pull -t $(REPO):$(TAG) .
 
 push:
 	docker push $(REPO):$(TAG)
 
-.PHONY: build-image push-image
+.PHONY: bin image push
