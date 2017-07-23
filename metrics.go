@@ -9,16 +9,30 @@ const (
 )
 
 var (
-	mLastUpdate = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name:      "last_update_unixtime",
-		Subsystem: "faircoin",
-		Help:      "Last time faircoind was polled",
-	})
-
+	// blockchain related
 	mCurrentHeight = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name:      "current_height",
 		Subsystem: "faircoin",
 		Help:      "Height of the block chain",
+	})
+
+	mLastBlockTimestamp = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name:      "last_block_timestamp",
+		Subsystem: "faircoin",
+		Help:      "Timestamp of the last block",
+	})
+
+	mLastBlockHeardTimestamp = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name:      "last_block_heard_timestamp",
+		Subsystem: "faircoin",
+		Help:      "Timestamp the last block was heard",
+	})
+
+	// cvn related
+	mCvnCount = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name:      "cvn_count",
+		Subsystem: "faircoin",
+		Help:      "How many CVNs are registered",
 	})
 
 	mLastBlockSigned = prometheus.NewGaugeVec(
@@ -28,17 +42,13 @@ var (
 			Help:      "Was the last block signed by a CVN",
 		},
 		[]string{"node_id"})
-
-	mCvnCount = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name:      "cvn_count",
-		Subsystem: "faircoin",
-		Help:      "How many CVNs are registered",
-	})
 )
 
 func registerMetrics() {
-	prometheus.MustRegister(mLastUpdate)
 	prometheus.MustRegister(mCurrentHeight)
-	prometheus.MustRegister(mLastBlockSigned)
+	prometheus.MustRegister(mLastBlockTimestamp)
+	prometheus.MustRegister(mLastBlockHeardTimestamp)
+
 	prometheus.MustRegister(mCvnCount)
+	prometheus.MustRegister(mLastBlockSigned)
 }

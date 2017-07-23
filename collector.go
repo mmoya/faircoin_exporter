@@ -68,10 +68,13 @@ func (c *Collector) syncStateOnce() error {
 	}
 
 	for len(blockHash) > 0 {
-		blockHash, err = c.updateStateFromBlock(blockHash)
+		block, err := c.updateStateFromBlock(blockHash)
 		if err != nil {
 			return errors.Wrap(err, "updateStateFromBlock")
 		}
+
+		mLastBlockHeardTimestamp.Set(float64(block.Time))
+		blockHash = block.NextBlockHash
 	}
 
 	c.state.synchronized = true
@@ -95,18 +98,20 @@ func (c *Collector) updateCvnList() (int, error) {
 	return activeCvns.CurrentHeight, nil
 }
 
-func (c *Collector) updateStateFromBlock(blockHash string) (string, error) {
+func (c *Collector) updateStateFromBlock(blockHash string) (*faircoin.Block, error) {
 	block, err := c.fc.GetBlock(blockHash, true, 1)
 	if err != nil {
-		return "", errors.Wrap(err, "GetBlock")
+		return nil, errors.Wrap(err, "GetBlock")
 	}
+
+	mLastBlockTimestamp.Set(float64(block.Time))
 
 	if strings.Contains(block.Payload, "cvninfo") {
 		log.Println("cnvinfo blog, resetting cvn state")
 
 		_, err := c.updateCvnList()
 		if err != nil {
-			return "", errors.Wrap(err, "updateCvnList from a cvninfo block")
+			return nil, errors.Wrap(err, "updateCvnList from a cvninfo block")
 		}
 	}
 
@@ -131,7 +136,7 @@ func (c *Collector) updateStateFromBlock(blockHash string) (string, error) {
 		mLastBlockSigned.WithLabelValues(id).Set(float64(lastBlockSigned))
 	}
 
-	return block.NextBlockHash, nil
+	return block, nil
 }
 
 func (c *Collector) startZmqListener() {
@@ -143,7 +148,7 @@ func (c *Collector) startZmqListener() {
 	for {
 		msg, err := c.sk.RecvMessageBytes(0)
 		if err != nil {
-			log.Println("inside zmqlistener", err)
+			log.Println("zmqlistener", err)
 		}
 
 		if len(msg) < 2 {
@@ -155,6 +160,8 @@ func (c *Collector) startZmqListener() {
 
 		switch string(topic) {
 		case "hashblock":
+			mLastBlockHeardTimestamp.Set(float64(time.Now().Unix()))
+
 			blockHash := string(hexlify(body))
 			_, err := c.updateStateFromBlock(blockHash)
 			if err != nil {

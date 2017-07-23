@@ -14,10 +14,10 @@ var (
 	listenAddress = flag.String("listen-address", ":9132", "The address to listen on for HTTP requests")
 
 	rpcURL      = flag.String("rpc.url", "http://127.0.0.1:40405", "URL of the RPC server")
-	rpcUser     = flag.String("rpc.user", "__coookie__", "")
-	rpcPassword = flag.String("rpc.password", "", "")
+	rpcUser     = flag.String("rpc.user", "", "User to authenticate to RPC server")
+	rpcPassword = flag.String("rpc.password", "", "Password to authenticate to RPC server")
 
-	zmqURL = flag.String("zmq.uri", "tcp://127.0.0.1:28332", "URI of ZMQ server")
+	zmqURL = flag.String("zmq.url", "tcp://127.0.0.1:28332", "URI of ZMQ server")
 )
 
 func main() {
